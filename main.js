@@ -13,7 +13,7 @@ const iconRed = path.join(__dirname, 'img', 'iconred.png');
 
 var mb = menubar({
   icon: iconBlack,
-  width: 2500,
+  width: 300,
   height: 300,
 });
 
@@ -22,13 +22,18 @@ var settings = {
 }
 
 
-mb.on('ready', function ready () {
+mb.on('ready', () => {
   var ping = new Ping(settings.server);
   var pingTimes = [];
   const pingsStored = 30;
+  var windowCreated = false;
 
-  mb.showWindow();
-  mb.window.openDevTools();
+  mb.on('after-create-window', () => {
+    windowCreated = true;
+  });
+
+  //mb.showWindow();
+  //mb.window.openDevTools();
 
   function update(array, value) {
     if (array.length + 1 > pingsStored) {
@@ -58,7 +63,9 @@ mb.on('ready', function ready () {
     var average = total/count;
     var packetLoss = dropped/array.length;
 
-    mb.window.webContents.send('pingData', [pingsStored, pingTimes, average, packetLoss, Boolean(pingTimes[pingTimes.length - 1])]);
+    if (windowCreated) {
+      mb.window.webContents.send('pingData', [pingsStored, pingTimes, average, packetLoss, Boolean(pingTimes[pingTimes.length - 1])]);
+    }
   }
 
 

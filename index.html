@@ -1,15 +1,23 @@
 <html>
   <head>
-    <title>Example App</title>
     <script src='./Chart.min.js'></script>
-  </head>
+    <style>
+      html, body {
+        overflow: hidden;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
 
+      #pingGraph {
+        width: 290px !important;
+        padding: 5px;
+        background-color: #f7faff;
+      }
+    </style>
+  </head>
   <body>
-    <div style='width: 100%'>
-      <div>
-        <canvas id='pingGraph' height='450' width='600'></canvas>
-      </div>
-    </div>
+    <canvas id='pingGraph'></canvas>
     <script src='./client.js'></script>
   </body>
 </html>
