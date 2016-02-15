@@ -2,6 +2,7 @@ const electron = require('electron');
 const app = electron.app;
 const Menu = electron.Menu;
 const Tray = electron.Tray;
+const ipcMain = require('electron').ipcMain;
 
 const Ping = require('ping-lite');
 const path = require('path');
@@ -12,7 +13,7 @@ const iconRed = path.join(__dirname, 'img', 'iconred.png');
 
 var mb = menubar({
   icon: iconBlack,
-  width: 250,
+  width: 2500,
   height: 300,
 });
 
@@ -26,11 +27,21 @@ mb.on('ready', function ready () {
   var pingTimes = [];
   const pingsStored = 30;
 
+  mb.showWindow();
+  mb.window.openDevTools();
+
   function update(array, value) {
     if (array.length + 1 > pingsStored) {
       array.shift();
     }
     array.push(value);
+
+    //change icon to red only if current icon is black and vice versa
+    if (pingTimes[pingTimes.length - 2] && pingTimes[pingTimes.length - 1]) {
+      mb.tray.setImage(iconBlack);
+    } else if (!pingTimes[pingTimes.length - 2] && !pingTimes[pingTimes.length - 1]) {
+      mb.tray.setImage(iconRed);
+    }
 
     var total = 0;
     var count = 0;
@@ -47,12 +58,7 @@ mb.on('ready', function ready () {
     var average = total/count;
     var packetLoss = dropped/array.length;
 
-    //change icon to red only if current icon is black and vice versa
-    if (pingTimes[pingTimes.length - 2] && pingTimes[pingTimes.length - 1]) {
-      mb.tray.setImage(iconBlack);
-    } else if (!pingTimes[pingTimes.length - 2] && !pingTimes[pingTimes.length - 1]) {
-      mb.tray.setImage(iconRed);
-    }
+    mb.window.webContents.send('pingData', [pingsStored, pingTimes, average, packetLoss, Boolean(pingTimes[pingTimes.length - 1])]);
   }
 
 
