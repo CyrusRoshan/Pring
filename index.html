@@ -4,9 +4,28 @@
     <style>
       html, body {
         overflow: hidden;
-        width: 100%;
+        width: 300px;
+        height: 300px;
         margin: 0;
         padding: 0;
+      }
+
+      #header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #c7e5ff;
+        height: 50px;
+      }
+
+      #logo {
+        width: 40px;
+      }
+
+      #name {
+        font-family: raleway;
+        font-size: 25px;
+        font-weight: 300;
       }
 
       #pingGraph {
@@ -14,10 +33,32 @@
         padding: 5px;
         background-color: #f7faff;
       }
+
+      .connected {
+
+      }
+
+      .slowed {
+
+      }
+
+      .disconnected {
+
+      }
+
     </style>
   </head>
   <body>
+    <div id='header'>
+      <img src='./img/icon.svg' id='logo'><div id='name'>Pring</div>
+    </div>
     <canvas id='pingGraph'></canvas>
+    <div id='stats'>
+      <div id='current'></div>
+      <div id='average'></div>
+      <div id='packetLoss'></div>
+      <div id='status'></div>
+    </div>
     <script src='./client.js'></script>
   </body>
 </html>

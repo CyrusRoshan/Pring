@@ -4,9 +4,6 @@ Chart.defaults.global.animation = true;
 Chart.defaults.global.animationSteps = 5;
 Chart.defaults.global.animationEasing = 'easeInExpo';
 Chart.defaults.global.tooltipTitleFontSize = 5;
-Chart.defaults.global.tooltipXOffset = 3;
-//Chart.defaults.global.tooltipYPadding = 3;
-//Chart.defaults.global.tooltipXPadding = 3;
 
 var data = {
   labels: [],
@@ -43,17 +40,20 @@ var options = {
 var ctx = document.getElementById('pingGraph').getContext('2d');
 var pingGraph = new Chart(ctx).Line(data, options);
 
-ipcRenderer.on('pingData', function(event, arg) {
-  console.log(arg);
-  // arg is [pingsStored, pingTimes, average, packetLoss, connected]
+ipcRenderer.on('pingData', function(event, pingData) {
+  console.log(pingData);
 
-  if (pingGraph.datasets[0].points.length < arg[0]) {
-    pingGraph.addData([arg[1][arg[1].length - 1]], ''); //add the last item in pingsTime to the graph
+  if (pingGraph.datasets[0].points.length < pingData.pingsStored) {
+    pingGraph.addData([pingData.pings[pingData.pings.length - 1]], ''); //add the last ping to the graph
   } else {
-    for (var i = 0; i < arg[0] - 1; i++) {
+    for (var i = 0; i < pingData.pingsStored - 1; i++) {
       pingGraph.datasets[0].points[i].value = pingGraph.datasets[0].points[i + 1].value; //shift values down
     }
-    pingGraph.datasets[0].points[arg[0] - 1].value = arg[1][arg[0] - 1]; //update the rightmost value
+    pingGraph.datasets[0].points[i].value = pingData.pings[i]; //update the rightmost value
   }
+
   pingGraph.update();
+
+
+
 });

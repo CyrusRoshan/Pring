@@ -13,8 +13,11 @@ const iconRed = path.join(__dirname, 'img', 'iconred.png');
 
 var mb = menubar({
   icon: iconBlack,
-  width: 300,
-  height: 300,
+  preloadWindow: true,
+  //width: 300,
+  width: 3000,
+  height: 500,
+  //height: 300,
 });
 
 var settings = {
@@ -24,16 +27,13 @@ var settings = {
 
 mb.on('ready', () => {
   var ping = new Ping(settings.server);
-  var pingTimes = [];
-  const pingsStored = 30;
-  var windowCreated = false;
+  var pings = [];
+  const pingsStored = 30; //total number of pings to average and show on graph
+  const pingDelay = 1000; //delay in ms between pings
+  const slowFactor = 2; //ping has to be greater than slowFactor * rolling average for it to be considered slowed
 
-  mb.on('after-create-window', () => {
-    windowCreated = true;
-  });
-
-  //mb.showWindow();
-  //mb.window.openDevTools();
+  mb.showWindow();
+  mb.window.openDevTools()
 
   function update(array, value) {
     if (array.length + 1 > pingsStored) {
@@ -42,38 +42,50 @@ mb.on('ready', () => {
     array.push(value);
 
     //change icon to red only if current icon is black and vice versa
-    if (pingTimes[pingTimes.length - 2] && pingTimes[pingTimes.length - 1]) {
+    if (pings[pings.length - 2] && pings[pings.length - 1]) {
       mb.tray.setImage(iconBlack);
-    } else if (!pingTimes[pingTimes.length - 2] && !pingTimes[pingTimes.length - 1]) {
+    } else if (!pings[pings.length - 2] && !pings[pings.length - 1]) {
       mb.tray.setImage(iconRed);
     }
 
     var total = 0;
     var count = 0;
-    var dropped = 0;
+    var packetsDropped = 0;
     for (var i = 0; i < array.length; i++) {
       if (array[i]) {
         total += array[i];
         count++;
       } else {
-        dropped++;
+        packetsDropped++;
       }
     }
 
-    var average = total/count;
-    var packetLoss = dropped/array.length;
-
-    if (windowCreated) {
-      mb.window.webContents.send('pingData', [pingsStored, pingTimes, average, packetLoss, Boolean(pingTimes[pingTimes.length - 1])]);
+    var average = (total/count).toFixed(2);
+    var packetLoss = (packetsDropped/array.length).toFixed(2);
+    var status;
+    if (!value) {
+      status = 'disconnected';
+    } else if (value > average * slowFactor) {
+      status = 'slowed';
+    } else {
+      status = 'connected';
     }
-  }
 
+    var pingData = {
+      pingsStored,
+      pings,
+      average,
+      packetsDropped,
+      packetLoss,
+      status
+    }
+
+    mb.window.webContents.send('pingData', pingData);
+  }
 
   setInterval(() => {
     ping.send(function (err, ms) {
-      update(pingTimes, ms);
+      update(pings, ms);
     });
-  }, 1000);
-
-
+  }, pingDelay);
 });
