@@ -1,27 +1,27 @@
 {
-  "name": "electron-quick-start",
+  "name": "Pring",
   "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "description": "simple task bar program for easily checking internet connectivity stats",
   "main": "main.js",
   "scripts": {
     "start": "electron main.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atom/electron-quick-start.git"
+    "url": "git+https://github.com/CyrusRoshan/Pring.git"
   },
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial"
+    "Pring",
+    "ping",
+    "network",
+    "connection"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Cyrus Roshan",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/atom/electron-quick-start/issues"
+    "url": "https://github.com/CyrusRoshan/Pring/issues"
   },
-  "homepage": "https://github.com/atom/electron-quick-start#readme",
+  "homepage": "https://github.com/CyrusRoshan/Pring#readme",
   "devDependencies": {
     "electron-prebuilt": "^0.36.7"
   },

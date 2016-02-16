@@ -19,6 +19,8 @@ var mb = menubar({
   width: 300,
   height: 310,
   transparent: true,
+  resizable: false,
+  index: 'file://' + path.join(__dirname, 'client', 'index.html'),
 });
 
 var settings = {
@@ -27,8 +29,7 @@ var settings = {
 
 
 mb.on('ready', () => {
-
-  mb.tray.setToolTip('This is my application.');
+  mb.tray.setToolTip('Pring');
 
   var alerts = {dc: false, slow: false, rc: false};
   var status;
@@ -92,7 +93,7 @@ mb.on('ready', () => {
       }
 
     } else if (value > average * slowFactor) { //when slowed
-      if (alerts.rc && status != 'slowed') {
+      if (alerts.slow && status != 'slowed') {
         alert('Slowed', 'iconNotifOrange.png');
       }
       if (status != 'slowed') {
@@ -101,7 +102,7 @@ mb.on('ready', () => {
       }
 
     } else { //when connected
-      if (alerts.dc && status === 'disconnected') {
+      if (alerts.rc && status === 'disconnected') {
         alert('Reconnected', 'iconNotif.png');
       }
       if (status != 'connected') {
