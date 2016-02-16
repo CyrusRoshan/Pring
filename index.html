@@ -5,10 +5,11 @@
       html, body {
         overflow: hidden;
         width: 300px;
-        height: 300px;
+        height: 320px;
         margin: 0;
         padding: 0;
         background-color: #cce7ff;
+        font-family: 'raleway';
       }
 
       #header {
@@ -24,9 +25,8 @@
       }
 
       #name {
-        font-family: raleway;
         font-size: 25px;
-        font-weight: 300;
+        font-weight: 400;
       }
 
       #pingGraph {
@@ -40,14 +40,19 @@
         display: inline-block;
       }
 
+      #stats {
+
+      }
+
       #row1 div {
         width: 50%;
         float: left;
         display: block;
         text-align: center;
-        height: 25px;
-        line-height: 25px;
-        font-family: 'raleway';
+        height: 30px;
+        line-height: 30px;
+        font-size: 16px;
+        font-family: 'lato';
       }
 
       #row1 div:nth-child(1) {
@@ -61,12 +66,14 @@
       }
 
       #packetLoss {
+        display: block;
         text-align: center;
-        height: 25px;
-        line-height: 25px;
-        font-family: 'raleway';
+        height: 30px;
+        line-height: 30px;
+        font-size: 16px;
         background-color: #E8F4FF;
         color: #072036;
+        font-family: 'lato';
       }
 
       #status {
@@ -74,8 +81,7 @@
         text-align: center;
         font-size: 25px;
         line-height: 40px;
-        font-family: raleway;
-        font-weight: 300;
+        font-weight: 400;
       }
 
       .connected {

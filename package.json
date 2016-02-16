@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "menubar": "^4.0.2",
-    "net-ping": "^1.1.12",
-    "tcp-ping": "^0.1.1"
+    "node-notifier": "^4.5.0",
+    "ping-lite": "^1.0.1"
   }
 }

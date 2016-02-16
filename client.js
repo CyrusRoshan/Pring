@@ -46,7 +46,7 @@ ipcRenderer.on('pingData', function(event, pingData) {
 
   var lastPing = pingData.pings[pingData.pings.length - 1];
 
-  document.getElementById('current').innerHTML = `Curr: ${lastPing ? lastPing.toFixed(2) + ' ms' : 'disconnected'}`;
+  document.getElementById('current').innerHTML = `Curr: ${lastPing ? lastPing.toFixed(2) + ' ms' : 'none'}`;
   document.getElementById('average').innerHTML = `Avg: ${pingData.average} ms`;
   document.getElementById('packetLoss').innerHTML = `Loss: ${pingData.packetsDropped} of ${pingData.pings.length}, or ${pingData.packetLoss}%`;
   document.getElementById('status').innerHTML = `<div class='${pingData.status}'>${pingData.status}</div>`;
