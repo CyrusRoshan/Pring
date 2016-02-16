@@ -1,6 +1,6 @@
 {
   "name": "Pring",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "simple task bar program for easily checking internet connectivity stats",
   "main": "main.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/CyrusRoshan/Pring#readme",
   "devDependencies": {
-    "electron-prebuilt": "^0.36.7"
+
   },
   "dependencies": {
     "menubar": "^4.0.2",

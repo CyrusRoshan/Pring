@@ -120,7 +120,9 @@ mb.on('ready', () => {
       status
     }
 
-    mb.window.webContents.send('pingData', pingData);
+    if (mb.window) { //so it won't throw an error on exiting (I guess it exits the client first)
+      mb.window.webContents.send('pingData', pingData);
+    }
   }
 
   setInterval(() => {
