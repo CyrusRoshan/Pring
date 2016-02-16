@@ -9,15 +9,14 @@ const path = require('path');
 const menubar = require('menubar')
 
 const iconBlack = path.join(__dirname, 'img', 'icon.png');
-const iconRed = path.join(__dirname, 'img', 'iconred.png');
+const iconOrange = path.join(__dirname, 'img', 'iconOrange.png');
+const iconRed = path.join(__dirname, 'img', 'iconRed.png');
 
 var mb = menubar({
   icon: iconBlack,
   preloadWindow: true,
-  //width: 300,
-  width: 3000,
-  height: 500,
-  //height: 300,
+  width: 300,
+  height: 300,
 });
 
 var settings = {
@@ -28,25 +27,18 @@ var settings = {
 mb.on('ready', () => {
   var ping = new Ping(settings.server);
   var pings = [];
+  var iconColor = 'black';
   const pingsStored = 30; //total number of pings to average and show on graph
   const pingDelay = 1000; //delay in ms between pings
   const slowFactor = 2; //ping has to be greater than slowFactor * rolling average for it to be considered slowed
 
-  mb.showWindow();
-  mb.window.openDevTools()
-
   function update(array, value) {
+
     if (array.length + 1 > pingsStored) {
       array.shift();
     }
     array.push(value);
 
-    //change icon to red only if current icon is black and vice versa
-    if (pings[pings.length - 2] && pings[pings.length - 1]) {
-      mb.tray.setImage(iconBlack);
-    } else if (!pings[pings.length - 2] && !pings[pings.length - 1]) {
-      mb.tray.setImage(iconRed);
-    }
 
     var total = 0;
     var count = 0;
@@ -69,6 +61,17 @@ mb.on('ready', () => {
       status = 'slowed';
     } else {
       status = 'connected';
+    }
+
+    if (status === 'slowed' && iconColor != 'orange') {
+      mb.tray.setImage(iconOrange);
+      iconColor = 'orange';
+    } else if (status === 'connected' && iconColor != 'black') {
+      mb.tray.setImage(iconBlack);
+      iconColor = 'black';
+    } else if (status === 'disconnected' && iconColor != 'red') {
+      mb.tray.setImage(iconRed);
+      iconColor = 'red';
     }
 
     var pingData = {

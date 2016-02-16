@@ -8,6 +8,7 @@
         height: 300px;
         margin: 0;
         padding: 0;
+        background-color: #cce7ff;
       }
 
       #header {
@@ -31,19 +32,62 @@
       #pingGraph {
         width: 290px !important;
         padding: 5px;
-        background-color: #f7faff;
+        background-color: #eaf5ff;
+      }
+
+      #row1 {
+        width: 100%;
+        display: inline-block;
+      }
+
+      #row1 div {
+        width: 50%;
+        float: left;
+        display: block;
+        text-align: center;
+        height: 25px;
+        line-height: 25px;
+        font-family: 'raleway';
+      }
+
+      #row1 div:nth-child(1) {
+        background-color: #a1c3e2;
+        color: #072036;
+      }
+
+      #row1 div:nth-child(2) {
+        background-color: #bbdfff;
+        color: #072036;
+      }
+
+      #packetLoss {
+        text-align: center;
+        height: 25px;
+        line-height: 25px;
+        font-family: 'raleway';
+        background-color: #E8F4FF;
+        color: #072036;
+      }
+
+      #status {
+        height: 40px;
+        text-align: center;
+        font-size: 25px;
+        line-height: 40px;
+        font-family: raleway;
+        font-weight: 300;
       }
 
       .connected {
-
+        background-color: #9bd0ff;
       }
 
       .slowed {
-
+        background-color: #e6b27e;
       }
 
       .disconnected {
-
+        background-color: #d17c7c;
       }
 
     </style>
@@ -54,8 +98,10 @@
     </div>
     <canvas id='pingGraph'></canvas>
     <div id='stats'>
-      <div id='current'></div>
-      <div id='average'></div>
+      <div id='row1'>
+        <div id='current'></div>
+        <div id='average'></div>
+      </div>
       <div id='packetLoss'></div>
       <div id='status'></div>
     </div>
