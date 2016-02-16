@@ -4,7 +4,7 @@ Chart.defaults.global.animation = true;
 Chart.defaults.global.animationSteps = 2;
 Chart.defaults.global.animationEasing = 'easeInExpo';
 Chart.defaults.global.tooltipTitleFontSize = 5;
-Chart.defaults.global.scaleFontFamily = 'lato';
+Chart.defaults.global.scaleFontFamily = "'open sans', 'sans serif', 'arial'";
 
 var data = {
   labels: [],
