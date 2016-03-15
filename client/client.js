@@ -1,6 +1,6 @@
 const ipcRenderer = require('electron').ipcRenderer;
 
-Chart.defaults.global.animation = true;
+Chart.defaults.global.animation = false;
 Chart.defaults.global.animationSteps = 2;
 Chart.defaults.global.animationEasing = 'easeInExpo';
 Chart.defaults.global.tooltipTitleFontSize = 5;
@@ -31,7 +31,7 @@ var options = {
   pointDot : true,
   pointDotRadius : 1,
   pointDotStrokeWidth : 1,
-  pointHitDetectionRadius : 2,
+  pointHitDetectionRadius : 3,
   datasetStroke : true,
   datasetStrokeWidth : 1,
   datasetFill : true,
